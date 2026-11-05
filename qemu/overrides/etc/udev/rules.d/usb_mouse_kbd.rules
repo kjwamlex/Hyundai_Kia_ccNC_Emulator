@@ -1,0 +1,2 @@
+# QEMU-only RAM override: retain the emulated USB keyboard and tablet.
+# The vendor rule emits synthetic remove events for USB boot input devices.

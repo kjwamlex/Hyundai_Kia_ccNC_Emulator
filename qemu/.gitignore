@@ -1,0 +1,25 @@
+# Only source entry points, documentation and source directories belong in Git.
+/*
+!/.gitignore
+!/*.py
+!/*.sh
+!/*.md
+!/*.json
+!/*.command
+!/compat/
+!/overrides/
+!/fixtures/
+
+artifacts/
+logs/
+state/
+__pycache__/
+*.py[cod]
+*.so
+*.so.*
+overrides/opt/ccnc-qemu/mesa/
+overrides/opt/ccnc-qemu/ashmem-test
+overrides/opt/ccnc-qemu/audio-check.wav
+# These local audit fixtures contain a vendor manifest and generated archive.
+fixtures/usb-audit-archive/
+fixtures/usb-audit-extracted/

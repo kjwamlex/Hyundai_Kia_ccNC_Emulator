@@ -1,0 +1,26 @@
+[
+  {
+    "package": "libgcc-10-dev",
+    "version": "10.2.1-6",
+    "url": "https://deb.debian.org/debian/pool/main/g/gcc-10/libgcc-10-dev_10.2.1-6_arm64.deb",
+    "sha256": "80fc73d339ada2e194175afe83cd89014565242153b6e3c2128849d8817da367"
+  },
+  {
+    "package": "libstdc++-10-dev",
+    "version": "10.2.1-6",
+    "url": "https://deb.debian.org/debian/pool/main/g/gcc-10/libstdc++-10-dev_10.2.1-6_arm64.deb",
+    "sha256": "cee7ca63613b50a8a51cc670db385c7e6d1181b72c94148fc8b7992e4570782d"
+  },
+  {
+    "package": "libc6-dev",
+    "version": "2.31-13+deb11u11",
+    "url": "https://deb.debian.org/debian/pool/main/g/glibc/libc6-dev_2.31-13+deb11u11_arm64.deb",
+    "sha256": "28d478134722dcd4b0bd2045a199301d18713bf95947b9fce66634e7aeacab2e"
+  },
+  {
+    "package": "linux-libc-dev",
+    "version": "5.10.223-1",
+    "url": "https://deb.debian.org/debian/pool/main/l/linux/linux-libc-dev_5.10.223-1_arm64.deb",
+    "sha256": "8b6374a64412d33eac61d74f77b8f932da4b8a707ea8a614791e2a35b8917618"
+  }
+]

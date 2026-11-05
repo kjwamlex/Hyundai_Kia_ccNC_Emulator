@@ -1,0 +1,26 @@
+[
+  {
+    "file": "vmlinuz-virt",
+    "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/netboot/vmlinuz-virt",
+    "size": 9642496,
+    "sha256": "01c33bc9a2a61cdde9eea7b6f3e43da6ba115b3fdcb76991a94415627b4c6768"
+  },
+  {
+    "file": "initramfs-virt",
+    "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/netboot/initramfs-virt",
+    "size": 8922420,
+    "sha256": "e86bef249f913654f1e869be5e66e984c1b949521cddd3d67f778238ac0a18e9"
+  },
+  {
+    "file": "config-6.12.114-0-virt",
+    "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/netboot/config-6.12.114-0-virt",
+    "size": 158758,
+    "sha256": "68428225ba2fc95116de21789fd0591697cd0506a7b732be2afdd0bfc5b1efcf"
+  },
+  {
+    "file": "linux-virt-6.12.114-r0.apk",
+    "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/main/aarch64/linux-virt-6.12.114-r0.apk",
+    "size": 36476099,
+    "sha256": "345b2d561443cd8c978cbcc0f36f2374b3ef702debb747221384b4ddc07d6a77"
+  }
+]

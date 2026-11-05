@@ -1,0 +1,2 @@
+# The older vendor input_id does not classify QEMU's absolute USB pointer.
+SUBSYSTEM=="input", KERNEL=="event*", ATTRS{name}=="QEMU QEMU USB Tablet", ENV{ID_INPUT}="1", ENV{ID_INPUT_MOUSE}="1"
