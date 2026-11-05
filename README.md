@@ -17,13 +17,21 @@ generated binaries, recordings, logs, and persistent VM disks are excluded from 
 
 ## Screenshots
 
-**Home dashboard running in QEMU**
+**Hyundai — Home dashboard running in QEMU**
 
 ![English ccNC Home dashboard in the QEMU window](docs/screenshots/dashboard.png)
 
-**Settings → General → Software Info/Update**
+**Hyundai — Settings → General → Software Info/Update**
 
 ![ccNC software information and update screen in the QEMU window](docs/screenshots/software-info.png)
+
+**Kia — Home dashboard running in QEMU**
+
+![English Kia ccNC Home dashboard in the QEMU window](docs/screenshots/kia-dashboard.png)
+
+**Kia — Settings → General → Software Info/Update**
+
+![Kia ccNC software information and update screen in the QEMU window](docs/screenshots/kia-software-info.png)
 
 ## Show the dashboard
 

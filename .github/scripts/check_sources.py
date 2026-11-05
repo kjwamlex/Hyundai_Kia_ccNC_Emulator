@@ -11,7 +11,8 @@ FORBIDDEN = {'artifacts', 'logs', 'state', '__pycache__', 'mesa',
              'usb-audit-archive', 'usb-audit-extracted'}
 SUFFIXES = {'.py', '.sh', '.c', '.cpp', '.h', '.S', '.json', '.md', '.txt',
             '.rules', '.conf', '.command', '.yml', '.yaml'}
-SCREENSHOTS = {'docs/screenshots/dashboard.png', 'docs/screenshots/software-info.png'}
+SCREENSHOTS = {'docs/screenshots/dashboard.png', 'docs/screenshots/software-info.png',
+               'docs/screenshots/kia-dashboard.png', 'docs/screenshots/kia-software-info.png'}
 
 
 def main():

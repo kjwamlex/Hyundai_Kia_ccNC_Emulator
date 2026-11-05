@@ -36,3 +36,5 @@ __pycache__/
 # Explicitly approved README screenshots; other image assets remain excluded.
 !/docs/screenshots/dashboard.png
 !/docs/screenshots/software-info.png
+!/docs/screenshots/kia-dashboard.png
+!/docs/screenshots/kia-software-info.png
