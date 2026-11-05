@@ -28,11 +28,18 @@ audit](APP_SUPPORT.md) for per-app results, limitations and direct launch comman
 
 ## Start the dashboard
 
-Double-click **Launch dashboard.command**, or from the firmware folder:
+After completing the [prerequisites and setup](../README.md#set-up-from-a-fresh-clone),
+open the repository's **qemu** folder in Finder and double-click
+**Launch dashboard.command**. Or run this from the repository's top-level folder:
 
 ```sh
-python3 qemu/run.py --gui ccnc --state
+python3 qemu/run.py --gui ccnc --display cocoa --state
 ```
+
+The dashboard appears in a **separate QEMU graphics window**; Terminal remains
+the serial console. `--gui ccnc` starts the original Home HMI, and
+`--display cocoa` explicitly opens the native macOS window. Click inside that
+window to interact. **F1 / Fn+F1** returns to Home from another app.
 
 Allow about 25–40 seconds on Apple Silicon. The serial console prints
 `CCNC_HMI_READY` after the original home window reaches foreground, followed by

@@ -15,6 +15,29 @@ the lab scripts, compatibility source, dependency manifests, and documentation.
 Decrypted images, extracted vendor files, application assets, downloaded packages,
 generated binaries, recordings, logs, and persistent VM disks are excluded from Git.
 
+## Show the dashboard
+
+After [supplying your firmware and completing setup](#set-up-from-a-fresh-clone),
+open Terminal in the cloned repository folder and run:
+
+```sh
+python3 qemu/run.py --gui ccnc --display cocoa --state
+```
+
+This opens a **separate QEMU window containing the ccNC dashboard**. Terminal
+continues to show the serial console. Wait about **25–40 seconds** for Home to
+appear, then click inside the QEMU window to use it. Press **F1** (or **Fn+F1**)
+to return to Home from another app.
+
+You can also open the repository's **qemu** folder in Finder and double-click
+**Launch dashboard.command**. Keep its Terminal window open while using the VM.
+
+If you previously started a serial-only session, type `poweroff -f` at its
+supervisor prompt, then start the dashboard using the command above. The `ccnc`
+console command enters the firmware shell; use `--gui ccnc` when launching QEMU
+to start the dashboard. The `--display cocoa` option explicitly selects the
+visible macOS window.
+
 ## Prerequisites
 
 The tested host is **macOS on Apple Silicon** with QEMU 11.1.3. Other hosts have
@@ -105,17 +128,24 @@ URLs are rolling; if upstream replaces a pinned file, setup stops on a hash
 mismatch. Keep a matching verified local cache, or update the corresponding
 dependency set and hashes together after validating the replacement.
 
-### 4. Launch the dashboard
+### 4. Open the dashboard window
+
+From the repository's top-level folder, run:
 
 ```sh
-python3 qemu/run.py --gui ccnc --state
+python3 qemu/run.py --gui ccnc --display cocoa --state
 ```
 
 Alternatively, double-click **qemu/Launch dashboard.command** in Finder.
-Allow about 25–40 seconds on Apple Silicon. The console prints
-`CCNC_HMI_READY` and then `CCNC_APPS_READY`. Click inside the QEMU window to
-send keyboard and mouse input to the guest. macOS dashboard launches use
-CoreAudio by default; `--audio none` provides silent emulated sound hardware.
+Two windows are involved: Terminal shows the boot log and serial prompt, while
+the separate **QEMU window shows the dashboard**. Allow about 25–40 seconds on
+Apple Silicon. The console prints `CCNC_HMI_READY` and then `CCNC_APPS_READY`.
+Click inside the QEMU window to send keyboard and mouse input to the guest.
+Use **F1 / Fn+F1** to show Home again after opening another app.
+
+macOS dashboard launches use CoreAudio by default; `--audio none` provides silent
+emulated sound hardware. Examples using `--display none` run headlessly for
+automated checks; use the command above for an interactive dashboard window.
 
 ## Keyboard shortcuts
 
@@ -218,6 +248,9 @@ local firmware; hosted CI can only validate source files and publication boundar
 - **Missing `clang`/`ld.lld`:** install Homebrew `llvm` and `lld`, then rerun setup.
 - **No keyboard response:** click the QEMU window, wait for `CCNC_APPS_READY`, and
   try Fn with the function key.
+- **Only a Terminal prompt appears:** launch with
+  `python3 qemu/run.py --gui ccnc --display cocoa --state` from the repository
+  root. This starts Home and opens its native macOS display window.
 - **No sound:** use the default CoreAudio backend and F8 to check output. F6/F7
   are silent unless an optional WAV file is supplied.
 - **State disk locked:** stop the other VM using that state file or select another.
