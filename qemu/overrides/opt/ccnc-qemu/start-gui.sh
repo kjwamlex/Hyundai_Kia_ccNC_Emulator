@@ -21,6 +21,9 @@ if [ "$mode" = desktop ]; then
     echo $! >/run/ccnc-qemu/client.pid
     echo 'CCNC_DESKTOP_STARTED: original Weston compositor and shared-memory client'
 else
+    python3 /opt/ccnc-qemu/brand-state.py
+    # Fresh state disks also need a destination for the vendor theme overlays.
+    mkdir -p /ccos/data/opt
     export QT_WAYLAND_SHELL_INTEGRATION=ivi-shell
     export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/ccos_session_bus_socket
     export LD_PRELOAD=/opt/ccnc-qemu/libashmem-qemu.so:/ccos/lib/libtrace.so

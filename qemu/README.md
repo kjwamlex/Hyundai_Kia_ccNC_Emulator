@@ -1,4 +1,4 @@
-# Hyundai ccNC QEMU environment
+# Hyundai / Kia ccNC QEMU environment
 
 For prerequisites and a fresh clone, start with the [project setup guide](../README.md).
 Firmware and generated evidence are local inputs/outputs and are not included
@@ -67,6 +67,31 @@ app translations. A lab helper saves guest user `0`'s valid HSystem language in
 With `--state`, the choice survives reboot; a disposable RAM session loses it.
 Korean is the fallback on a first boot with no valid system language.
 
+### Hyundai / Kia brand selection
+
+**Launch dashboard.command** offers Hyundai, Kia, or Enter to keep the saved
+choice. From the command line, stop the current VM, then launch with
+`--brand kia` or `--brand hyundai` alongside `--gui ccnc --state`.
+Omitting `--brand` restores the choice saved in that state disk; without a saved
+choice, the firmware's existing brand is used. Without `--state`, a selection
+lasts for one session. A restart is required when changing brands.
+
+Before variantservice starts, `brand-state.py` updates only the brand default in
+`/etc/sw_feature/sw_feature.json` and saves the choice in
+`/ccos/data/ccnc-qemu/brand.json`. A changed selection invalidates
+`/esp/variant_version`, causing the original service to rebuild its software
+variant cache from configured defaults. Other manually coded software variants
+may consequently return to their defaults; the vehicle model is not changed.
+The original image remains read-only. The OEM applications select their own brand
+assets, and F6/F7 select the matching supplied video clips. Genesis is not offered
+because this build lacks its theme and animation assets.
+
+Host regression checks run with `python3 qemu/test-brand.py`. With local firmware,
+use `--job qemu/test-brand.sh --screenshot qemu/artifacts/display/brand.png` on a
+GUI launch to verify the generated/shared brand and matching clip files. Run the
+welcome/goodbye check below with `--brand kia` and then `--brand hyundai` on the
+same stopped state disk; omit `--brand` on the next boot to check persistence.
+
 For a simple compositor diagnostic use `--gui desktop` or **Launch graphics.command**.
 This starts the original Weston desktop shell with its shared-memory sample;
 it is a separate diagnostic, not the dashboard.
@@ -120,14 +145,17 @@ fallback. Offline checks do not consume password attempts.
 
 ### Welcome and goodbye shortcuts
 
-Press **F6** in the dashboard window to replay the original Hyundai welcome video;
+Press **F6** in the dashboard window to replay the original welcome video for the active brand;
 **F7** replays the goodbye video without shutting down. Playback returns to Home.
 Repeated presses during playback are ignored. These shortcuts use CPU video decoding
 and temporarily pause Weston while displaying frames, since the factory animation
 service requires an NVIDIA video sink.
 
-The default clips are `/ccos/services/welcomeaniservice/lhd/welcome_hyundai_avnt.264`
-and `goodbye_hyundai_avnt.264`. To override them, place raw H.264 clips at
+The helper reads `SW.CAR_BRAND` from the variant service's generated
+`/tmp/ccos/sw_feature.json` and selects `welcome_<brand>_avnt.264` and
+`goodbye_<brand>_avnt.264` under `/ccos/services/welcomeaniservice/lhd/`.
+This firmware includes Hyundai and Kia clips; a missing brand clip reports an
+error. To override the selection, place raw H.264 clips at
 `/ccos/data/qemu/welcome.264` and `/ccos/data/qemu/goodbye.264` inside the guest.
 Clips are fitted to the display with their aspect ratio preserved and limited to
 15 seconds. Changes persist when using `--state`.

@@ -17,3 +17,5 @@ jobs:
           python-version: '3.12'
       - name: Check syntax and exclude firmware and generated files
         run: python3 .github/scripts/check_sources.py
+      - name: Check brand switching and saved state
+        run: python3 qemu/test-brand.py

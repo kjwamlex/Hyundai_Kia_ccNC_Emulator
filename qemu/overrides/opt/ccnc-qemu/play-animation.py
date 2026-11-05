@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Replay OEM welcome videos through the lab framebuffer, without NVIDIA sinks."""
 import fcntl
+import json
 import mmap
 import os
 from pathlib import Path
@@ -30,9 +31,15 @@ def play(kind):
             return
         video = CUSTOM / (kind + '.264')
         if not video.is_file():
-            video = Path('/ccos/services/welcomeaniservice/lhd') / (kind + '_hyundai_avnt.264')
+            # variantservice generates this file from the active vehicle coding.
+            variants = Path('/tmp/ccos/sw_feature.json')
+            brand = json.loads(variants.read_text())['SW.CAR_BRAND'].lower()
+            if brand not in ('hyundai', 'kia', 'genesis'):
+                raise RuntimeError('unsupported animation brand: ' + brand)
+            video = Path('/ccos/services/welcomeaniservice/lhd') / (kind + '_' + brand + '_avnt.264')
         if not video.is_file():
             raise RuntimeError('animation file missing: ' + str(video))
+        print('CCNC_ANIMATION_SOURCE: ' + str(video), flush=True)
         weston = int((RUNTIME / 'weston.pid').read_text())
         if Path('/proc/%d/comm' % weston).read_text().strip() != 'weston':
             raise RuntimeError('Weston PID is no longer valid')

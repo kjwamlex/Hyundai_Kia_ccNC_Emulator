@@ -147,6 +147,7 @@ python3 qemu/run.py --gui ccnc --display cocoa --state
 ```
 
 Alternatively, double-click **qemu/Launch dashboard.command** in Finder.
+The launcher offers **Hyundai**, **Kia**, or **Enter** to keep the saved brand.
 Two windows are involved: Terminal shows the boot log and serial prompt, while
 the separate **QEMU window shows the dashboard**. Allow about 25–40 seconds on
 Apple Silicon. The console prints `CCNC_HMI_READY` and then `CCNC_APPS_READY`.
@@ -156,6 +157,27 @@ Use **F1 / Fn+F1** to show Home again after opening another app.
 macOS dashboard launches use CoreAudio by default; `--audio none` provides silent
 emulated sound hardware. Examples using `--display none` run headlessly for
 automated checks; use the command above for an interactive dashboard window.
+
+## Switch Hyundai and Kia themes
+
+Stop the VM with `poweroff -f` in its supervisor console, then select a brand
+when launching:
+
+```sh
+python3 qemu/run.py --gui ccnc --display cocoa --state --brand kia
+python3 qemu/run.py --gui ccnc --display cocoa --state --brand hyundai
+```
+
+The selection changes the original app branding, theme assets, and F6/F7 welcome
+and goodbye videos. It takes effect at boot and is saved in the chosen `--state`
+disk. Omit `--brand` to reuse that selection; without `--state`, it lasts for
+the current session. A state disk with no saved choice uses the firmware's brand.
+Custom video overrides still take precedence.
+
+This selects branding within the supplied firmware; the vehicle model and
+hardware remain those of that firmware. Switching brands refreshes the vendor
+software variant cache from its configured defaults. Genesis is excluded because
+this build does not include its theme and animation assets.
 
 ## Keyboard shortcuts
 
@@ -168,8 +190,8 @@ Use **Fn** with function keys if macOS reserves them for media/system controls.
 | F3 | Phone |
 | F4 | Audio / Sounds of Nature |
 | F5 | Settings |
-| F6 | Original Hyundai welcome animation |
-| F7 | Original Hyundai goodbye animation; does not shut down |
+| F6 | Original welcome animation for the active brand |
+| F7 | Original goodbye animation for the active brand; does not shut down |
 | F8 | One-second audio test tone |
 | F9 | Original engineering-mode password screen; valid credentials still required |
 

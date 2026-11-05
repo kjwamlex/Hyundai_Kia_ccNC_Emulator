@@ -188,6 +188,8 @@ def main():
     parser.add_argument("--timeout", type=int, default=120, help="Smoke/job timeout in seconds")
     parser.add_argument("--display", choices=["none", "cocoa"], help="Native window, or headless (default: cocoa for --gui, otherwise none)")
     parser.add_argument("--gui", choices=["desktop", "ccnc"], help="Start firmware Weston; ccnc starts the original home HMI using CPU OpenGL")
+    parser.add_argument("--brand", choices=["hyundai", "kia"],
+                        help="Select ccNC branding, theme and animations (saved with --state; otherwise keep the saved/firmware brand)")
     parser.add_argument("--gpu", action="store_true", help="Add virtio GPU even with no display window")
     parser.add_argument("--audio", choices=["off", "coreaudio", "wav", "none"], help="Output-only HDA sound backend (default: CoreAudio for ccNC GUI on macOS, otherwise off)")
     parser.add_argument("--audio-file", type=Path, help="Output WAV file for --audio wav")
@@ -206,6 +208,8 @@ def main():
     parser.add_argument("--language-test", action="store_true", help="For test-language.sh: select English/Korean through Settings")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
+    if args.brand and args.gui != "ccnc":
+        parser.error("--brand requires --gui ccnc")
     if args.usb_image:
         args.usb_image = args.usb_image.resolve()
         if not args.usb_image.is_file():
@@ -234,6 +238,8 @@ def main():
             parser.error("Build the compatibility library first: python3 qemu/compat/build.py")
         if args.gui == "ccnc" and not (args.overlay / "opt/ccnc-qemu/mesa/lib/dri/swrast_dri.so").exists():
             parser.error("Prepare CPU OpenGL first: python3 qemu/compat/prepare-mesa.py")
+        if args.brand and not (args.overlay / "opt/ccnc-qemu/brand-state.py").is_file():
+            parser.error("--brand requires brand-state.py in the selected overlay")
     qemu = shutil.which("qemu-system-aarch64")
     if not qemu:
         parser.error("qemu-system-aarch64 missing; install with: brew install qemu")
@@ -305,7 +311,8 @@ def main():
     extra += cpio_entry("TRAILER!!!", mode=0)
     job_initrd.write_bytes(initrd.read_bytes() + gzip.compress(extra, mtime=0))
     initrd = job_initrd
-    cmd = [qemu, "-name", "Hyundai-ccNC-userspace", "-machine", "virt,gic-version=3",
+    label = {"hyundai": "Hyundai-", "kia": "Kia-"}.get(args.brand, "")
+    cmd = [qemu, "-name", label + "ccNC-userspace", "-machine", "virt,gic-version=3",
            "-accel", accel, "-cpu", "host" if accel == "hvf" else "cortex-a57",
            "-smp", str(args.cpus), "-m", str(args.memory), "-display", args.display,
            "-monitor", "none", "-serial", "mon:stdio", "-no-reboot",
@@ -330,6 +337,8 @@ def main():
                 "-device", "usb-storage,bus=ccnc-usb.0,drive=usb-media,removable=on,serial=CCNC-LAB-USB"]
     if args.gui:
         cmd[cmd.index("-append") + 1] += f" ccnc.gui={args.gui}"
+    if args.brand:
+        cmd[cmd.index("-append") + 1] += f" ccnc.brand={args.brand}"
     if args.audio != "off":
         import time
         cmd[cmd.index("-append") + 1] += f" ccnc.audio=1 ccnc.epoch={int(time.time())}"
