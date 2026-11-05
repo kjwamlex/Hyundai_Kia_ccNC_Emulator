@@ -15,6 +15,16 @@ the lab scripts, compatibility source, dependency manifests, and documentation.
 Decrypted images, extracted vendor files, application assets, downloaded packages,
 generated binaries, recordings, logs, and persistent VM disks are excluded from Git.
 
+## Screenshots
+
+**Home dashboard running in QEMU**
+
+![English ccNC Home dashboard in the QEMU window](docs/screenshots/dashboard.png)
+
+**Settings → General → Software Info/Update**
+
+![ccNC software information and update screen in the QEMU window](docs/screenshots/software-info.png)
+
 ## Show the dashboard
 
 After [supplying your firmware and completing setup](#set-up-from-a-fresh-clone),

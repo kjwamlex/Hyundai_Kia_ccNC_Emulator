@@ -3,7 +3,10 @@
 This repository distributes the independently written emulator integration,
 compatibility source, build scripts, and documentation. It does not distribute
 Hyundai/Kia/Mobis firmware, decrypted firmware, extracted vendor executables or
-libraries, images, animations, sound assets, or saved VM disks.
+libraries, extracted image assets, animations, sound assets, or saved VM disks.
+
+The README includes user-supplied screenshots of the running emulator for
+documentation. These screenshots are separate from the firmware and its assets.
 
 Users obtain and prepare compatible firmware independently. The setup scripts
 expect local firmware files and do not download or decrypt them. The original
